@@ -1,0 +1,27 @@
+#!/bin/sh
+set -eu
+
+if [ "${1:-}" = "debug" ]; then
+	debug='debug,sshfs_debug,loglevel=debug'
+fi
+
+sshfs_drive_path='Q:/My Drive'
+sshfs_mount_point='/mnt/drive'
+sshfs_ad_domain='{{ .win_sshfs_domain }}'
+sshfs_user_name='{{ .win_sshfs_username }}'
+ssh_timeout=2
+
+sshfs_host_ip="$(tail --lines=1 /etc/resolv.conf | awk '{print $2}')"
+sshfs_identity_file="$HOME/.ssh/id_wsl"
+sshfs_destination="$sshfs_ad_domain\\$sshfs_user_name@$sshfs_host_ip"
+
+# mkdir and chown if current user is not owner of mount directory
+if [ "$(ls -ld "$sshfs_mount_point" | awk '{print $3}')" != "$USER" ]; then
+	sudo mkdir -p "$sshfs_mount_point";
+	sudo chown "$USER:$USER" "$sshfs_mount_point"
+fi
+
+if [ -n "${debug+}" ]; then echo "Connecting to $sshfs_destination with IdentityFile '$sshfs_identity_file'. Mounting to $sshfs_mount_point"; fi
+
+sshfs "${sshfs_destination}:${sshfs_drive_path}" -o "IdentityFile=$sshfs_identity_file" -o "ConnectTimeout=$ssh_timeout" -o "${debug+$debug,}allow_other,gid=$(id --group),idmap=user,uid=$(id --user)" "$sshfs_mount_point"
+unset debug sshfs_drive_path sshfs_mount_point sshfs_host_ip sshfs_identity_file sshfs_ad_domain sshfs_user_name sshfs_destination

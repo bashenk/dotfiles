@@ -1,0 +1,21 @@
+alias docker="/mnt/c/Program\ Files/Docker/Docker/Resources/bin/docker.exe"
+alias nmap="/mnt/c/Program\ Files\ \(x86\)/Nmap/nmap.exe"
+
+PyCharmVersion="201.7846.77"
+alias charm="/mnt/c/Users/Brian/AppData/Local/JetBrains/Toolbox/apps/PyCharm-P/ch-0/$PyCharmVersion/bin/pycharm64.exe"
+alias jupyter-notebook="~/.local/bin/jupyter-notebook --no-browser"
+alias ndk-clang="$NDK_PREBUILT/armv7a-linux-androideabi29-clang++"
+#alias localhost="172.23.32.1"
+
+alias env2=". $HOME/env2/bin/activate"
+alias env3=". $HOME/env3/bin/activate"
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+#alias dotnet='/mnt/c/Users/Brian/.dotnet/dotnet.exe'
+alias apiport="dotnet /mnt/c/Users/Brian/RiderProjects/Tools/dotnet-apiport/bin/Debug/ApiPort/netcoreapp2.1/ApiPort.dll"
+
+alias fastboot='/mnt/c/ProgramData/chocolatey/lib/adb/tools/platform-tools/fastboot.exe'
+alias diskuse='ncdu /'

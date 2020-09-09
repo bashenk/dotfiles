@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ -f "$HOME/.env" ]; then . "$HOME/.env"; fi
+
+## Put interactive shell setup here
+if [ -f "$HOME/dotfiles/PS1" ]; then . "$HOME/dotfiles/PS1"; fi
+if [ -f "$HOME/dotfiles/sshfs_drive.sh" ]; then if [[ ! "$(findmnt -M '/mnt/drive')" ]]; then "$HOME/dotfiles/sshfs_drive.sh" 2>/dev/null || echo 'Failed to map Google Drive'; fi; fi
+if [ -f "$HOME/.aliases" ]; then . "$HOME/.aliases"; fi
+
+sshd_status="$(service ssh status)"
+if [[ $sshd_status = *"is not running"* ]]; then
+  sudo service ssh --full-restart 1>/dev/null 2>&1
+fi

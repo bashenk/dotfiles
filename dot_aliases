@@ -1,0 +1,24 @@
+#!/bin/sh
+
+OPTIONS="-h" && COLOR='auto' && LS_OPTIONS="$OPTIONS --color=$COLOR" && export LS_OPTIONS
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+
+    alias grep='grep --color=always'
+    alias fgrep='fgrep --color=always'
+    alias egrep='egrep --color=always'
+fi
+unset COLOR OPTIONS
+
+# `unalias ls` in order to use ls() syntax
+function ls () {
+  eval "command ls $LS_OPTIONS \"\$@\""
+}
+alias ll='ls -al' # 'ls -AhlF'
+alias la='ls -A' # ' ls -Ah'
+alias l='ls -CF' # 'ls -CFh'
+
+alias sudoenv="sudo "
+
+alias diffc='diff --color=always -u'
+alias less='less -r'
