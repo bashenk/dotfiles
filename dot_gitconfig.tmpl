@@ -20,7 +20,7 @@
 	longpaths = true
 	pager = less -s
 [credential]
-	helper = manager
+	helper = {{ .git_credential_helper }}
 	modalPrompt = true
 [filter "lfs"]
 	process = git-lfs filter-process
@@ -34,5 +34,5 @@
 [init]
 	templatedir = ~/.git-templates
 [user]
-	name = {{ .git_name }}
-	email = {{ .git_email }}
+	name = "{{ .git_name }}"
+	email = "{{ .git_email }}"
